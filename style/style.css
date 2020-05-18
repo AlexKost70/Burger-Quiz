@@ -1,6 +1,24 @@
+@font-face {
+    font-family: 'Bona Nova';
+    src: url(../fonts/BonaNova-Regular.otf);
+}
+
+@font-face {
+    font-family: 'Bona Nova';
+    src: url(../fonts/BonaNova-Bold.otf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Bona Nova';
+    src: url(../fonts/BonaNova-Italic.otf);
+    font-style: italic;
+}
+
+
 body {
     background: #E0FFFF;
-    font-family: fantasy, sans-serif;
+    font-family: fantasy, 'Bona Nova', sans-serif;
 }
 
 li {

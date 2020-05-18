@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
     const btnOpenModal = document.querySelector('#btnOpenModal');
     const modalBlock = document.querySelector('#modalBlock');
-    const modalWrap = document.querySelector('.modal');
     const closeModal = document.querySelector('#closeModal');
     const questionTitle = document.querySelector('#question');
     const formAnswers = document.querySelector('#formAnswers');
     const burgerBtn = document.getElementById('burger');
     const nextButton = document.querySelector('#next');
     const prevButton = document.querySelector('#prev');
+    const modalDialog = document.querySelector('.modal-dialog');
 
 
     let clientWidth = document.documentElement.clientWidth;
@@ -104,10 +104,25 @@ document.addEventListener('DOMContentLoaded', function () {
         type: 'radio'
     }
 ];
+    let count = -100;
+    let interval;
+
+    modalDialog.style.top='-100%';
+
+    const animateModal = () => {
+        modalDialog.style.top = count + '%';
+        count++;
+
+        if(count >= 0 ) {
+            clearInterval(interval);
+            count = -100;
+        }
+    };
 
     btnOpenModal.addEventListener('click', () => {
-        playTest();
+        interval = setInterval(animateModal, 5);
         modalBlock.classList.add('d-block');
+        playTest();
     });
 
 
@@ -180,8 +195,8 @@ document.addEventListener('DOMContentLoaded', function () {
         prevButton.onclick = () => {
             numberQuestion--;
             renderQuestions(numberQuestion);
-        }
+        };
+    };
+});
 
-    }
-})
 
