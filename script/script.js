@@ -18,23 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         burgerBtn.style.display='none';
     }
 
-    window.addEventListener('resize', function () {
-        clientWidth = document.documentElement.clientWidth;
-        
-        if (clientWidth < 768) {
-            burgerBtn.style.display = 'flex';
-        } else {
-            burgerBtn.style.display = 'none';
-        }
-    });
-
-    burgerBtn.addEventListener('click', function () {
-        burgerBtn.classList.add('active');
-        modalBlock.classList.add('d-block');
-        playTest();
-    })
-
-
     const questions = [{
         question: "Какого цвета бургер?",
         answers: [{
@@ -111,16 +94,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const animateModal = () => {
         modalDialog.style.top = count + '%';
-        count++;
-
-        if(count >= 0 ) {
-            clearInterval(interval);
-            count = -100;
+        count+=4;
+        if(count < 0) {
+            requestAnimationFrame(animateModal);
+        } else {
+            count -= 100;
         }
+        
     };
 
+    window.addEventListener('resize', function () {
+        clientWidth = document.documentElement.clientWidth;
+        
+        if (clientWidth < 768) {
+            burgerBtn.style.display = 'flex';
+        } else {
+            burgerBtn.style.display = 'none';
+        }
+    });
+
+    burgerBtn.addEventListener('click', function () {
+        burgerBtn.classList.add('active');
+        modalBlock.classList.add('d-block');
+        playTest();
+    })
+
+
     btnOpenModal.addEventListener('click', () => {
-        interval = setInterval(animateModal, 5);
+        requestAnimationFrame(animateModal);
         modalBlock.classList.add('d-block');
         playTest();
     });
@@ -152,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             questions[index].answers.forEach((answer) => {
                 const answerItem = document.createElement('div');
                 
-                answerItem.classList.add('answers-item', 'd-flex', 'flex-column');
+                answerItem.classList.add('answers-item', 'd-flex', 'justify-content-center');
 
                 answerItem.innerHTML = `
                 <input type="${questions[index].type}" id="${answer.title}" name="answer" class="d-none">
