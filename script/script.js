@@ -1,11 +1,39 @@
 document.addEventListener('DOMContentLoaded', function () {
     const btnOpenModal = document.querySelector('#btnOpenModal');
     const modalBlock = document.querySelector('#modalBlock');
+    const modalWrap = document.querySelector('.modal');
     const closeModal = document.querySelector('#closeModal');
     const questionTitle = document.querySelector('#question');
     const formAnswers = document.querySelector('#formAnswers');
+    const burgerBtn = document.getElementById('burger');
     const nextButton = document.querySelector('#next');
     const prevButton = document.querySelector('#prev');
+
+
+    let clientWidth = document.documentElement.clientWidth;
+
+    if(clientWidth < 768) {
+        burgerBtn.style.display = "flex";
+    } else {
+        burgerBtn.style.display='none';
+    }
+
+    window.addEventListener('resize', function () {
+        clientWidth = document.documentElement.clientWidth;
+        
+        if (clientWidth < 768) {
+            burgerBtn.style.display = 'flex';
+        } else {
+            burgerBtn.style.display = 'none';
+        }
+    });
+
+    burgerBtn.addEventListener('click', function () {
+        burgerBtn.classList.add('active');
+        modalBlock.classList.add('d-block');
+        playTest();
+    })
+
 
     const questions = [{
         question: "Какого цвета бургер?",
@@ -80,11 +108,25 @@ document.addEventListener('DOMContentLoaded', function () {
     btnOpenModal.addEventListener('click', () => {
         playTest();
         modalBlock.classList.add('d-block');
-    })
+    });
+
+
+
+    document.addEventListener('click', function(event) {
+        if (
+            !event.target.closest('.modal-dialog') &&
+            !event.target.closest('.openModalButton') &&
+            !event.target.closest('.burger')
+        ) {
+            modalBlock.classList.remove('d-block');
+            burgerBtn.classList.remove('active');
+        }
+    });
 
     closeModal.addEventListener('click', () => {
         modalBlock.classList.remove('d-block');
-    })
+        burgerBtn.classList.remove('active');
+    });
 
     const playTest = () => {
         let numberQuestion = 0;
